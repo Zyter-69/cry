@@ -30,16 +30,19 @@ def decrypt():
     shiftNbr = int(input ("enter the number of shift : "))
     print(deCaesar(textEncrypted, shiftNbr))
     
+while True :
+    print ("Welcome to the Caesar cipher program!")
 
-print ("Welcome to the Caesar cipher program!")
+    x= int(input("enter 1 for encryption and 2 for decryption 3 to exit : "))
 
-x= int(input("enter 1 for encryption and 2 for decryption : "))
-
-if x == 1:
-    encrypt()
-elif x == 2:
-    decrypt()
-else:
-    print("invalid input")
+    if x == 1:
+        encrypt()
+    elif x == 2:
+        decrypt()
+    elif x == 3:
+        print("Good bye!")
+        break
+    else:
+        print("invalid input")
 
 
