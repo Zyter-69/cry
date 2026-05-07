@@ -111,9 +111,12 @@ def decrypt (table):
             else:
                 decryptedText += table[row1][col2]
                 decryptedText += table[row2][col1]
-    y = int (input("do you want to remove the 'x' that was added for padding ? 1 for yes and 2 for no : "))
-    if y == 1:
-        decryptedText = decryptedText.replace('x', '')
+    if 'x' in decryptedText:
+        print("The letter 'x' was used for padding.")
+        y = int (input("do you want to remove the 'x' that was added for padding ? 1 for yes and 2 for no : "))
+        if y == 1:
+            decryptedText = decryptedText.replace('x', '')
+
     return decryptedText
 
 
