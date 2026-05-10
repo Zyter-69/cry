@@ -8,6 +8,11 @@ FRENCH_WORDS = {
     'lire', 'ecrire', 'voir', 'entendre', 'parler', 'donner', 'prendre',
     'venir', 'partir', 'arriver', 'rester', 'tomber', 'lever', 'baisser',
     'montrer', 'trouver', 'chercher', 'demander', 'repondre', 'connaitre'
+    , 'savoir', 'comprendre', 'aimer', 'detester', 'penser', 'croire',
+    'espérer', 'attendre', 'travailler', 'jouer', 'manger', 'boire', 'dormir', 'vivre', 'mourir', 'naître', 'grandir',
+    'petit', 'beau', 'joli', 'moche', 'bon', 'mauvais', 'heureux', 'triste', 'fort', 'faible', 'rapide', 'lent', 'jeune', 'vieux', 'nouveau', 'ancien', 'premier', 'dernier', 'prochain', 'loin', 'près'
+, 'ici', 'là', 'partout', 'nulle part', 'toujours', 'jamais', 'souvent', 'parfois', 'rarement', 'tous', 'aucun', 'plus', 'moins', 'autre', 'même', 'seul', 'ensemble', 'différent', 'semblable', 'possible', 'impossible', 'important', 'intéressant', 'ennuyeux', 'facile', 'difficile'
+    ,'bonjour', 'au revoir', 'merci', 's’il vous plaît', 'excusez-moi', 'félicitations', 'bienvenue', 'bonne chance', 'bonne nuit', 'à bientôt', 'à demain', 'à tout à l’heure'
 }
 
 def chiffrer_caesar(texte, k):
@@ -35,7 +40,7 @@ def dechiffrer_caesar(texte, k):
 def count_french_words(texte):
     """Count valid French words in text"""
     texte = texte.lower()
-    words = texte.replace(' ', '').split()
+    words = texte.split()
     if not words:
         words = [texte.replace(' ', '')]
     
