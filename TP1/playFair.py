@@ -1,33 +1,164 @@
 def createMatrix(keyList):
+    """Create 5x5 Playfair matrix from key list"""
     table = [[0 for i in range(5)] for j in range(5)]
-
     for i in range(5):
         for j in range(5):
             table[i][j] = keyList[i * 5 + j]
-
     return table
 
 def printMatrix(table):
-    #printing the table
+    """Print the Playfair matrix"""
+    print("\nPlayfair Key Matrix:")
     for i in range(5):
         for j in range(5):
-            print (table[i][j], end = " ")
+            print(table[i][j], end=" ")
         print()
 
-
 def enterKey():
+    """Generate Playfair matrix from user key"""
     key = input("Enter the key: ")
     
-    alphabet = "abcdefghijklmnopqrstuvxyz"# w mkach
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
     key = key.replace(" ", "")
     key = key.lower()
     used = set()
     result = []
     
+    # Add unique letters from key
     for ch in key:
         if ch in alphabet and ch not in used:
             result.append(ch)
             used.add(ch)
+    
+    # Add remaining letters (except j, or combine i/j)
+    for ch in alphabet:
+        if ch not in used and ch != 'j':
+            result.append(ch)
+            used.add(ch)
+    
+    return result
+
+def find_position(matrix, char):
+    """Find position of character in matrix"""
+    for i in range(5):
+        for j in range(5):
+            if matrix[i][j] == char:
+                return i, j
+    return -1, -1
+
+def encrypt(plaintext, key):
+    """Encrypt using Playfair cipher"""
+    # Generate key matrix
+    keylist = enterKey()
+    matrix = createMatrix(keylist)
+    printMatrix(matrix)
+    
+    # Prepare plaintext: remove spaces, add x between duplicates
+    plaintext = plaintext.replace(" ", "").lower()
+    plaintext = plaintext.replace("j", "i")
+    
+    # Process pairs
+    ciphertext = ""
+    i = 0
+    while i < len(plaintext):
+        # Get pair of letters
+        char1 = plaintext[i]
+        if i + 1 < len(plaintext):
+            char2 = plaintext[i + 1]
+        else:
+            char2 = 'x'  # Padding
+        
+        # If same letter, insert x
+        if char1 == char2:
+            char2 = 'x'
+            i += 1
+        else:
+            i += 2
+        
+        # Find positions
+        row1, col1 = find_position(matrix, char1)
+        row2, col2 = find_position(matrix, char2)
+        
+        # Apply Playfair rules
+        if row1 == row2:  # Same row
+            ciphertext += matrix[row1][(col1 + 1) % 5]
+            ciphertext += matrix[row2][(col2 + 1) % 5]
+        elif col1 == col2:  # Same column
+            ciphertext += matrix[(row1 + 1) % 5][col1]
+            ciphertext += matrix[(row2 + 1) % 5][col2]
+        else:  # Rectangle
+            ciphertext += matrix[row1][col2]
+            ciphertext += matrix[row2][col1]
+    
+    return ciphertext
+
+def decrypt(ciphertext, key):
+    """Decrypt using Playfair cipher"""
+    # Generate key matrix
+    keylist = enterKey()
+    matrix = createMatrix(keylist)
+    printMatrix(matrix)
+    
+    ciphertext = ciphertext.replace(" ", "").lower()
+    
+    # Process pairs
+    plaintext = ""
+    for i in range(0, len(ciphertext), 2):
+        if i + 1 < len(ciphertext):
+            char1 = ciphertext[i]
+            char2 = ciphertext[i + 1]
+            
+            # Find positions
+            row1, col1 = find_position(matrix, char1)
+            row2, col2 = find_position(matrix, char2)
+            
+            # Apply Playfair rules (reverse)
+            if row1 == row2:  # Same row
+                plaintext += matrix[row1][(col1 - 1) % 5]
+                plaintext += matrix[row2][(col2 - 1) % 5]
+            elif col1 == col2:  # Same column
+                plaintext += matrix[(row1 - 1) % 5][col1]
+                plaintext += matrix[(row2 - 1) % 5][col2]
+            else:  # Rectangle
+                plaintext += matrix[row1][col2]
+                plaintext += matrix[row2][col1]
+    
+    return plaintext
+
+def menu():
+    """Interactive menu for Playfair cipher"""
+    print("=" * 50)
+    print("         Playfair Cipher — Encrypt / Decrypt")
+    print("=" * 50)
+    
+    while True:
+        print("\nOptions:")
+        print("  1. Encrypt")
+        print("  2. Decrypt")
+        print("  3. Exit")
+        choice = input("\nChoose [1-3]: ").strip()
+        
+        if choice == '3':
+            print("Exiting...")
+            break
+        
+        if choice == '1':
+            plaintext = input("Enter plaintext: ")
+            key = input("Enter key (will be regenerated): ")
+            ciphertext = encrypt(plaintext, key)
+            print(f"\nCiphertext: {ciphertext}")
+        
+        elif choice == '2':
+            ciphertext = input("Enter ciphertext: ")
+            key = input("Enter key: ")
+            plaintext = decrypt(ciphertext, key)
+            print(f"\nPlaintext: {plaintext}")
+        
+        else:
+            print("Invalid choice.")
+
+if __name__ == "__main__":
+    menu()
     
     for ch in alphabet:
         if ch not in used:
