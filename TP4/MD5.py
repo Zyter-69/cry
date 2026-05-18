@@ -1,6 +1,4 @@
 import math
-
-import math
 import struct
 
 def pad(msg):
@@ -51,13 +49,13 @@ def II(a, b, c, d, M, s, i):
 def MD5(msg):
     msg_bytes = pad(msg)
     blocks = split(msg_bytes)
-    
+    A = 0x67452301
+    B = 0xEFCDAB89
+    C = 0x98BADCFE
+    D = 0x10325476
     for block in blocks:
-        a = 0x67452301
-        b = 0xEFCDAB89
-        c = 0x98BADCFE
-        d = 0x10325476
-        
+        a, b, c, d = A, B, C, D
+
         M = list(struct.unpack('<16I', block))
         
         for j in range(0, 16, 4):
@@ -96,5 +94,9 @@ def MD5(msg):
             i=(i+7)%16
             b, c, d, a = II(b, c, d, a, M[i], 21, j+3+48)
             i=(i+7)%16
+        A = (A + a) & 0xFFFFFFFF
+        B = (B + b) & 0xFFFFFFFF
+        C = (C + c) & 0xFFFFFFFF
+        D = (D + d) & 0xFFFFFFFF
         
-        print(f"A = {hex(a)}\nB = {hex(b)}\nC = {hex(c)}\nD = {hex(d)}")
+    return struct.pack('<4I', A, B, C, D).hex()

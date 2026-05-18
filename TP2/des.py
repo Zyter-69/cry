@@ -1,5 +1,4 @@
-import sys
-
+import os
 # --- DES Tables ---
 IP = [
     58, 50, 42, 34, 26, 18, 10, 2,
@@ -249,22 +248,21 @@ def menu():
             continue
 
         try:
-            key = input("Enter 64-bit key in HEX (16 characters, e.g., 0123456789ABCDEF): ").strip().upper()
-            if len(key) != 16 or not all(c in "0123456789ABCDEF" for c in key):
-                print("Error: Key must be exactly 16 hexadecimal characters.")
-                continue
-
             if choice == '1':
+                key = os.urandom(8)
+                hex_key = key.hex()
+                print("ur key is " + hex_key)
                 text = input("Enter plain-text message: ")
-                cipher_hex = encrypt(text, key)
+                cipher_hex = encrypt(text, hex_key)
                 print(f"Encrypted message (HEX): {cipher_hex}")
 
             elif choice == '2':
-                cipher_hex = input("Enter encrypted message (HEX): ").strip().upper()
-                if len(cipher_hex) % 16 != 0 or not all(c in "0123456789ABCDEF" for c in cipher_hex):
-                    print("Error: Encrypted message must be a multiple of 16 hexadecimal characters.")
+                hex_key = input("Enter 16-digit hex key: ").strip().upper()
+                if len(hex_key) != 16 or not all(c in "0123456789ABCDEF" for c in hex_key):
+                    print("Error: Key must be 16 hexadecimal characters.")
                     continue
-                plain_string = decrypt(cipher_hex, key)
+                cipher_hex = input("Enter encrypted message (HEX): ").strip().upper()
+                plain_string = decrypt(cipher_hex, hex_key)
                 print(f"Decrypted message: {plain_string}")
 
         except Exception as e:
