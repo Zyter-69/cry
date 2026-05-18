@@ -12,7 +12,7 @@ def traite_msg_a_enoyer(message, Spk, private_key):
     key = os.urandom(8).hex()
     cipher_hex = des.encrypt(message, key)
     msg_signature = des.encrypt(str(hash_signed), key)
-    key_cipher = rsa.encrypt(key, Spk)
+    key_cipher = rsa.encrypt(key, Spk) #Spk est la clé publique de B
     return (cipher_hex, msg_signature, key_cipher)
 
 def traite_msg_recu(cipher_msg , signature, key_cipher, private_key, Cpk):

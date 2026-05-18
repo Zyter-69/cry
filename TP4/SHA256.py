@@ -5,7 +5,7 @@ Produces 256-bit (32-byte) hash output
 """
 
 import struct
-
+import hashlib
 
 # SHA-256 Constants - First 32 bits of fractional parts of cube roots of first 64 primes
 K = [
@@ -128,8 +128,12 @@ def menu():
         try:
             if choice == '1':
                 message = input("Enter message: ")
+                hash_lib = hashlib.sha256(message.encode()).hexdigest()
                 result = SHA256(message)
                 print(f"\nSHA-256: {result}")
+                print("Hash de la bibliothèque : ", hash_lib)
+                if(hash_lib == result):
+                    print("Les deux hash sont identiques.")
             
             elif choice == '2':
                 filepath = input("Enter file path: ")

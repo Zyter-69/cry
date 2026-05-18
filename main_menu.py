@@ -63,7 +63,7 @@ def print_main_menu():
        └─ ECDSA signatures
     
     6. TP 6 - SECURE COMMUNICATIONS
-       └─ Examples and explanations for secure communications
+       └─ Sockets Communication 
       
     7. COMPREHENSIVE TEST SUITE
        └─ Run all algorithm tests

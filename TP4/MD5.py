@@ -1,6 +1,6 @@
 import math
 import struct
-
+import hashlib
 def pad(msg):
     msg_bytes = msg.encode('utf-8')
     length = len(msg_bytes) * 8
@@ -100,3 +100,10 @@ def MD5(msg):
         D = (D + d) & 0xFFFFFFFF
         
     return struct.pack('<4I', A, B, C, D).hex()
+
+hash_lib = hashlib.md5(b"test md5").hexdigest()
+notre_hash = MD5("test md5")
+print("Hash de la bibliothèque : ", hash_lib)
+print("Notre hash : ", notre_hash)
+if(hash_lib == notre_hash):
+    print("Les deux hash sont identiques.")
