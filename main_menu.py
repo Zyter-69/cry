@@ -199,16 +199,24 @@ def tp6_menu():
     while True:
         print_header("TP 6 - SECURE COMMUNICATIONS")
         print("""
-    1. Examples and explanations for secure communications
-    2. Back to Main Menu
+    1. Secure TCP/IP Socket Communication (RSA + AES)
+    2. Secure Bluetooth Communication (RFCOMM)
+    3. Secure UDP Chat Application (AES-256-CBC)
+    4. Secure Electronic Voting System (Homomorphic Encryption)
+    5. Back to Main Menu
         """)
         
-        choice = input("Choose [1-2]: ").strip()
+        choice = input("Choose [1-5]: ").strip()
         
         if choice == '1':
-            print("Examples and explanations for secure communications...")
-            input("Press Enter to continue...")
+            run_algorithm("TP6", "secure_tcp_sockets.py")
         elif choice == '2':
+            run_algorithm("TP6", "secure_bluetooth.py")
+        elif choice == '3':
+            run_algorithm("TP6", "secure_udp_chat.py")
+        elif choice == '4':
+            run_algorithm("TP6", "secure_voting.py")
+        elif choice == '5':
             return
         else:
             print("Invalid choice. Please try again.")

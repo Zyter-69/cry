@@ -1,19 +1,19 @@
-# Common French words for validation
-FRENCH_WORDS = {
-    'le', 'de', 'un', 'et', 'a', 'que', 'est', 'en', 'pour', 'que', 'du',
-    'la', 'les', 'des', 'se', 'il', 'ce', 'dans', 'par', 'je', 'qui',
-    'on', 'vous', 'nous', 'me', 'te', 'lui', 'au', 'aux', 'ont', 'etre',
-    'avoir', 'faire', 'aller', 'dire', 'pouvoir', 'vouloir', 'devoir',
-    'je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles', 'moi', 'toi',
-    'lire', 'ecrire', 'voir', 'entendre', 'parler', 'donner', 'prendre',
-    'venir', 'partir', 'arriver', 'rester', 'tomber', 'lever', 'baisser',
-    'montrer', 'trouver', 'chercher', 'demander', 'repondre', 'connaitre'
-    , 'savoir', 'comprendre', 'aimer', 'detester', 'penser', 'croire',
-    'espérer', 'attendre', 'travailler', 'jouer', 'manger', 'boire', 'dormir', 'vivre', 'mourir', 'naître', 'grandir',
-    'petit', 'beau', 'joli', 'moche', 'bon', 'mauvais', 'heureux', 'triste', 'fort', 'faible', 'rapide', 'lent', 'jeune', 'vieux', 'nouveau', 'ancien', 'premier', 'dernier', 'prochain', 'loin', 'près'
-, 'ici', 'là', 'partout', 'nulle part', 'toujours', 'jamais', 'souvent', 'parfois', 'rarement', 'tous', 'aucun', 'plus', 'moins', 'autre', 'même', 'seul', 'ensemble', 'différent', 'semblable', 'possible', 'impossible', 'important', 'intéressant', 'ennuyeux', 'facile', 'difficile'
-    ,'bonjour', 'au revoir', 'merci', 's’il vous plaît', 'excusez-moi', 'félicitations', 'bienvenue', 'bonne chance', 'bonne nuit', 'à bientôt', 'à demain', 'à tout à l’heure'
-}
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+WORD_FILE = os.path.join(BASE_DIR, "francais.txt")
+
+FRENCH_WORDS = set()
+
+try:
+    with open(WORD_FILE, "r", encoding="utf-8") as file:
+        for word in file:
+            word = word.strip().lower()
+            if word:
+                FRENCH_WORDS.add(word)
+except FileNotFoundError:
+    print("Error: 'francais.txt' not found in script directory.")
+    exit(1)
 
 def chiffrer_caesar(texte, k):
     """Encrypt text using Caesar cipher (a-z only, ignore spaces/case)"""

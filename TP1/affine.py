@@ -40,7 +40,7 @@ def validate_keys(a: int, b: int) -> None:
             f"Valid values: {VALID_A}"
         )
     if not (0 <= b <= 25):
-        raise ValueError(f"Key 'b' = {b} must be between 0 and 25.")
+        b= b % 26
 
 
 def encrypt(plaintext: str, a: int, b: int) -> str:
